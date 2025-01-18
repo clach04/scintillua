@@ -37,8 +37,6 @@ lex:add_rule('priority', lex:tag(lexer.NUMBER, lexer.starts_line(P('(') * lexer.
 -- good
 --lex:add_rule('priority', lex:tag(lexer.NUMBER, lexer.starts_line('(A) ')))
 --lex:add_rule('priority', lex:tag(lexer.NUMBER, lexer.starts_line('(A) ') + lexer.starts_line('(B) ') + lexer.starts_line('(C) ') ))
---lex:add_rule('priority', lex:tag(lexer.NUMBER, lexer.starts_line('(') * lexer.upper * P(') ') ))
---lex:add_rule('priority', lex:tag(lexer.NUMBER, lexer.starts_line(P('(') * lexer.upper * P(') '))))
 
 
 
