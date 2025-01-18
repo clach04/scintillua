@@ -84,11 +84,16 @@ lex:add_rule('date', lex:tag(lexer.KEYWORD, lexer.digit*lexer.digit*lexer.digit*
 -- Project and Context last, as same characters can show up in key:value
 
 -- Project +
-lex:add_rule('project', lex:tag(lexer.LABEL, lexer.range('+', lexer.space, true)))
+lex:add_rule('project', lex:tag(lexer.REFERENCE, lexer.range('+', lexer.space, true)))  -- REFERENCE and lexer.LINK seem the same
+--lex:add_rule('project', lex:tag(lexer.LABEL, lexer.range('+', lexer.space, true)))
 --lex:add_rule('project', lex:tag(lexer.TYPE, lexer.range('+', lexer.space, true)))
 -- Context @
 --lex:add_rule('context', lex:tag(lexer.NUMBER, P('@')))
-lex:add_rule('context', lex:tag(lexer.STRING, lexer.range('@', lexer.space, true)))
+--lex:add_rule('context', lex:tag(lexer.STRING, lexer.range('@', lexer.space, true)))
+lex:add_rule('context', lex:tag(lexer.ITALIC, lexer.range('@', lexer.space, true)))
+
+
+lex:add_rule('todo_txt', lex:tag(lexer.STRING, lexer.any))
 
 
 return lex
