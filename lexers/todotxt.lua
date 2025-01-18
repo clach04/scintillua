@@ -42,7 +42,6 @@ lex:add_rule('priority', lex:tag(lexer.BOLD, lexer.starts_line(P('(') * lexer.up
 
 
 
-
 -- key:value
 -- https://github.com/too-much-todotxt/spec/issues/23
 -- TODO see if can/should use; patt1 - patt2	Matches patt1 if patt2 does not also match
@@ -53,8 +52,6 @@ lex:add_rule('priority', lex:tag(lexer.BOLD, lexer.starts_line(P('(') * lexer.up
 
 -- matches single char as expected
 --lex:add_rule('key_value', lex:tag(lexer.NUMBER, not_whitespace*P(':')*not_whitespace))
-
-
 
 
 -- does whole line so getting closer
