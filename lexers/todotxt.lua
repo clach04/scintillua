@@ -39,6 +39,7 @@ lex:add_rule('priority', lex:tag(lexer.BOLD, lexer.starts_line(P('(') * lexer.up
 
 -- key:value
 -- https://github.com/too-much-todotxt/spec/issues/23
+-- TODO different style for key and value so they are clearly marked?
 -- TODO see if can/should use; patt1 - patt2	Matches patt1 if patt2 does not also match
 --      lexer.any - lexer.space
 -- as word may be too restrictive according to spec
