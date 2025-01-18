@@ -40,23 +40,12 @@ lex:add_rule('priority', lex:tag(lexer.BOLD, lexer.starts_line(P('(') * lexer.up
 -- key:value
 -- https://github.com/too-much-todotxt/spec/issues/23
 -- TODO different style for key and value so they are clearly marked?
--- TODO see if can/should use; patt1 - patt2	Matches patt1 if patt2 does not also match
---      lexer.any - lexer.space
--- as word may be too restrictive according to spec
+lex:add_rule('key_value', lex:tag(lexer.NUMBER, not_whitespace_word*P(':')*not_whitespace_word))
+-- word too restrictive according to todo.txt spec
 -- below fails to match; due:2025-01-31 hide:1 rec:1b rec2:+2w p:2
 --lex:add_rule('key_value', lex:tag(lexer.NUMBER, lexer.word*P(':')*lexer.word))
 
--- matches single char as expected
---lex:add_rule('key_value', lex:tag(lexer.NUMBER, not_whitespace*P(':')*not_whitespace))
 
-
--- does whole line so getting closer
---lex:add_rule('key_value', lex:tag(lexer.NUMBER, keyvalue_key*keyvalue_value))
-
-
--- fails
---lex:add_rule('key_value', lex:tag(lexer.NUMBER, not_whitespace^1*P(':')*not_whitespace^1))
-lex:add_rule('key_value', lex:tag(lexer.NUMBER, not_whitespace_word*P(':')*not_whitespace_word))
 
 
 -- date - any context, for now treat due and complete (or anywhere in string) the same
