@@ -31,11 +31,13 @@ local not_whitespace_word = not_whitespace * not_whitespace^0
 -- Done/Complete items, map to comment style
 lex:add_rule('done', lex:tag(lexer.COMMENT, lexer.starts_line(lexer.to_eol('x '))))
 
--- Priority, for now map to number - TODO map A, B, C to unique style colors?
-lex:add_rule('priority', lex:tag(lexer.NUMBER, lexer.starts_line(P('(') * lexer.upper * P(') '))))
+-- Priority, trest A, B, C as unique, D+ same style
+lex:add_rule('priority_A', lex:tag(lexer.ERROR, lexer.starts_line('(A) ')))
+lex:add_rule('priority_B', lex:tag(lexer.PREPROCESSOR, lexer.starts_line('(B) ')))
+lex:add_rule('priority_C', lex:tag(lexer.NUMBER, lexer.starts_line('(C) ')))
+lex:add_rule('priority', lex:tag(lexer.BOLD, lexer.starts_line(P('(') * lexer.upper * P(') '))))
 
--- good
---lex:add_rule('priority', lex:tag(lexer.NUMBER, lexer.starts_line('(A) ')))
+-- Idea, lump some priority styles together
 --lex:add_rule('priority', lex:tag(lexer.NUMBER, lexer.starts_line('(A) ') + lexer.starts_line('(B) ') + lexer.starts_line('(C) ') ))
 
 
