@@ -8,18 +8,25 @@ local lex = lexer.new('todotxt')
 
 local punct_not_colon = lpeg.R('!/', ';@', '[\'', '{~')  -- same as lexer.punct without colon ':'
 
+-- None of these lexer.any - lexer.space patterns work :-(
 --local not_whitespace = lexer.any - lexer.space
+--local not_whitespace = (lexer.any - lexer.space)^0
+--local not_whitespace = (lexer.any - lexer.space)^-0
+--local not_whitespace = (lexer.any - lexer.space)^1
+--local not_whitespace = (lexer.any - lexer.space)^-1
+
+-- where as these patterns work great!
 --local not_whitespace = lexer.alnum + P('_') + P('-') + P('+') + P('@')
 local not_whitespace = lexer.alnum + punct_not_colon  -- this does not work for non-ascii characters :-(
+
+local not_whitespace_word = not_whitespace * not_whitespace^0
+
+-- Experiments that did not work at the time of testing (before had working not_whitespace_word pattern)
 --local keyvalue_key = lexer.range(not_whitespace, ':', true)
 --local keyvalue_value = lexer.range(not_whitespace, lexer.space, true)
 --local keyvalue_key = lexer.range(lexer.space, ':', false)
 --local keyvalue_value = lexer.range(lexer.space, lexer.space, false)
-local not_whitespace_word = not_whitespace * not_whitespace^0
---local not_whitespace_word = lexer.word  -- this works but only for alpha starting key/value
---local not_whitespace_word = not_whitespace^0
---local not_whitespace_word = not_whitespace^-1
---local not_whitespace_word = not_whitespace^1*#lexer.space
+
 
 -- Done/Complete items, map to comment style
 lex:add_rule('done', lex:tag(lexer.COMMENT, lexer.starts_line(lexer.to_eol('x '))))
