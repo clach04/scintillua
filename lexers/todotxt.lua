@@ -6,18 +6,13 @@ local P, S = lpeg.P, lpeg.S
 
 local lex = lexer.new('todotxt')
 
-local punct_not_colon = lpeg.R('!/', ';@', '[\'', '{~')  -- same as lexer.punct without colon ':'
+--local punct_not_colon = lpeg.R('!/', ';@', '[\'', '{~')  -- same as lexer.punct without colon ':'
 
--- None of these lexer.any - lexer.space patterns work :-(
---local not_whitespace = lexer.any - lexer.space
---local not_whitespace = (lexer.any - lexer.space)^0
---local not_whitespace = (lexer.any - lexer.space)^-0
---local not_whitespace = (lexer.any - lexer.space)^1
---local not_whitespace = (lexer.any - lexer.space)^-1
+local not_whitespace = lexer.any - lexer.space - P(':')
 
--- where as these patterns work great!
+-- Alternative patterns
 --local not_whitespace = lexer.alnum + P('_') + P('-') + P('+') + P('@')
-local not_whitespace = lexer.alnum + punct_not_colon  -- this does not work for non-ascii characters :-(
+--local not_whitespace = lexer.alnum + punct_not_colon  -- this does not work for non-ascii characters :-(
 
 local not_whitespace_word = not_whitespace * not_whitespace^0
 
