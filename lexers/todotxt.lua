@@ -67,16 +67,20 @@ lex:add_rule('key_value', lex:tag(lexer.NUMBER, not_whitespace_word*P(':')*not_w
 
 
 -- date - any context, for now treat due and complete (or anywhere in string) the same
--- map to operator? - sort of bold
--- map to keyword? - different color
--- TODO avoid numbers more than 4 digits? P(' ') prefix won't work for start of line
--- this one explictly only matches 4 digits, then 2, then 2 - but could be part of a longer number that is NOT a date, need some sort of prefix and postfix marker
+-- TODO avoid numbers more than 4 digits? P(' ') prefix won't work for start of line but does for postfix, still unclear why https://github.com/orbitalquark/scintillua/discussions/135
+-- this one explictly only matches 4 digits, then 2, then 2
 --lex:add_rule('date', lex:tag(lexer.KEYWORD, lexer.digit*lexer.digit*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit))  -- too aggressive
-lex:add_rule('date', lex:tag(lexer.KEYWORD, lexer.digit*lexer.digit*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit*#lexer.space))  -- seems to work perfectly but I do not understand why prefix does not
+--lex:add_rule('date', lex:tag(lexer.KEYWORD, lexer.digit*lexer.digit*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit*#lexer.space))  -- seems to work perfectly but I do not understand why prefix does not
 
--- Seems to work? unclear about count 
+-- works great, see if we can improve on this
+lex:add_rule('date', lex:tag(lexer.KEYWORD, lexer.digit^4*P('-') * lexer.digit^2 * P('-') * lexer.digit^2 * #lexer.space))
+
+-- Seems to work but too greedy
 --lex:add_rule('date', lex:tag(lexer.KEYWORD, lexer.digit^4*P('-')*lexer.digit^2*P('-')*lexer.digit^2))  -- too aggressive
 --lex:add_rule('date', lex:tag(lexer.KEYWORD, lexer.digit^-4*P('-')*lexer.digit^-2*P('-')*lexer.digit^-2))  -- too aggressive
+
+-- get this to work. https://github.com/orbitalquark/scintillua/discussions/135#discussioncomment-11876564
+--lex:add_rule('date', #lexer.space*lex:tag(lexer.KEYWORD, lexer.digit*lexer.digit*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit))
 
 -- does NOT work
 --lex:add_rule('date', lex:tag(lexer.KEYWORD, #lexer.space*lexer.digit*lexer.digit*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit*P('-')*lexer.digit*lexer.digit))
@@ -97,5 +101,8 @@ lex:add_rule('context', lex:tag(lexer.ITALIC, lexer.range('@', lexer.space, true
 
 lex:add_rule('todo_txt', lex:tag(lexer.STRING, lexer.any))
 
+-- style notes
+-- map to operator? - sort of bold
+-- map to keyword? - different color
 
 return lex
