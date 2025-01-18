@@ -42,7 +42,7 @@ lex:add_rule('priority', lex:tag(lexer.BOLD, lexer.starts_line(P('(') * lexer.up
 -- TODO different style for key and value so they are clearly marked?
 lex:add_rule('key_value', lex:tag(lexer.NUMBER, not_whitespace_word*P(':')*not_whitespace_word))
 -- word too restrictive according to todo.txt spec
--- below fails to match; due:2025-01-31 hide:1 rec:1b rec2:+2w p:2
+-- below works for alpha words but fails to match; due:2025-01-31 hide:1 rec:1b rec2:+2w p:2
 --lex:add_rule('key_value', lex:tag(lexer.NUMBER, lexer.word*P(':')*lexer.word))
 
 
